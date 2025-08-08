@@ -1,13 +1,23 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "OrderUp Backend Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "echo \"No build required for backend\" && exit 0",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "socket.io",
+    "backend"
+  ],
+  "author": "Your Name am0070563@gmail.com",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
@@ -15,5 +25,13 @@
     "express": "^5.1.0",
     "mongoose": "^8.17.1",
     "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "eslint": "^9.3.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
