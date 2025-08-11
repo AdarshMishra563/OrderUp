@@ -55,28 +55,29 @@ io.on('connection', (socket) => {
 // Optional: basic route for sanity check
 app.get('/', (req, res) => {
   res.send('Socket.IO DeliveryBoy Location Server running (no DB)');
-});app.get('/api/data', (req, res) => {
+});
+
+app.get('/api/data', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  const totalItems = 36; // Total items available (mock data)
+  const totalItems = 36;
 
-  // Movie titles and posters
+  // Movie titles and stable poster URLs from TMDb (poster sizes: w185 or w342)
   const movieData = [
-    { title: 'Inception', img: 'https://m.media-amazon.com/images/I/51xJHqgK8-L._AC_SY679_.jpg' },
-    { title: 'The Dark Knight', img: 'https://m.media-amazon.com/images/I/51k0qa6qg-L._AC_SY679_.jpg' },
-    { title: 'Interstellar', img: 'https://m.media-amazon.com/images/I/71yAzDq0n-L._AC_SY679_.jpg' },
-    { title: 'Avengers: Endgame', img: 'https://m.media-amazon.com/images/I/81ExhpBEbHL._AC_SY679_.jpg' },
-    { title: 'The Matrix', img: 'https://m.media-amazon.com/images/I/51EG732BV3L.jpg' },
-    { title: 'Gladiator', img: 'https://m.media-amazon.com/images/I/51A+gYtWx0L._AC_SY679_.jpg' }
+    { title: 'Inception', img: 'https://image.tmdb.org/t/p/w185/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg' },
+    { title: 'The Dark Knight', img: 'https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg' },
+    { title: 'Interstellar', img: 'https://image.tmdb.org/t/p/w185/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg' },
+    { title: 'Avengers: Endgame', img: 'https://image.tmdb.org/t/p/w185/or06FN3Dka5tukK1e9sl16pB3iy.jpg' },
+    { title: 'The Matrix', img: 'https://image.tmdb.org/t/p/w185/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg' },
+    { title: 'Gladiator', img: 'https://image.tmdb.org/t/p/w185/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg' }
   ];
 
-  // Generate mock movie data
   const items = Array.from({ length: totalItems }, (_, i) => {
     const movie = movieData[i % movieData.length];
     return {
       id: `${i + 1}`,
       title: movie.title,
-      price: (i % 10) + 1, // keeping your price field
+      price: (i % 10) + 1,
       date: new Date(Date.now() - i * 86400000).toISOString().split('T')[0],
       image: movie.img,
       name: movie.title,
@@ -85,7 +86,6 @@ app.get('/', (req, res) => {
     };
   });
 
-  // Paginate results
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
   const paginatedItems = items.slice(startIndex, endIndex);
@@ -98,7 +98,6 @@ app.get('/', (req, res) => {
     });
   }, 2500);
 });
-
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
